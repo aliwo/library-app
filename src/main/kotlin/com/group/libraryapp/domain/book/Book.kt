@@ -3,11 +3,12 @@ package com.group.libraryapp.domain.book
 import javax.persistence.*
 
 @Entity
-class Book constructor(
+class Book(
     val name: String,
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Long? = null,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
 ) {
     init {
         if (name.isBlank()) {
