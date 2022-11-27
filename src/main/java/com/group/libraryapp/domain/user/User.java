@@ -1,5 +1,6 @@
 package com.group.libraryapp.domain.user;
 
+import com.group.libraryapp.domain.book.Book;
 import com.group.libraryapp.domain.book.JavaBook;
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class User {
     this.name = name;
   }
 
-  public void loanBook(JavaBook book) {
+  public void loanBook(Book book) {
     this.userLoanHistories.add(new UserLoanHistory(this, book.getName(), false));
   }
 

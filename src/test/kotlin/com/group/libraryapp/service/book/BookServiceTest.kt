@@ -1,5 +1,6 @@
 package com.group.libraryapp.service.book
 
+import com.group.libraryapp.domain.book.Book
 import com.group.libraryapp.domain.book.BookRepository
 import com.group.libraryapp.domain.book.JavaBook
 import com.group.libraryapp.domain.user.User
@@ -49,7 +50,7 @@ open class BookServiceTest @Autowired constructor(
     @DisplayName("책 대출이 정상 동작한다")
     fun loanBookTest() {
         // Given
-        bookRepository.save(JavaBook("이상한 나라의 엘리스"))
+        bookRepository.save(Book("이상한 나라의 엘리스"))
         val savedUser = userRepository.save(User("정승원", null))
         val request = BookLoanRequest("정승원", "이상한 나라의 엘리스")
 
@@ -67,7 +68,7 @@ open class BookServiceTest @Autowired constructor(
     @Test
     fun loanBookFailTest() {
         // Given
-        bookRepository.save(JavaBook("이상한 나라의 엘리스"))
+        bookRepository.save(Book("이상한 나라의 엘리스"))
         val savedUser = userRepository.save(User("정승원", null))
         userLoanHistoryRepository.save(UserLoanHistory(savedUser, "이상한 나라의 엘리스", false))
         val request = BookLoanRequest("정승원", "이상한 나라의 엘리스")
@@ -84,7 +85,7 @@ open class BookServiceTest @Autowired constructor(
     @Test
     fun returnBookTest() {
         // Given
-        bookRepository.save(JavaBook("이상한 나라의 엘리스"))
+        bookRepository.save(Book("이상한 나라의 엘리스"))
         val savedUser = userRepository.save(User("정승원", null))
         userLoanHistoryRepository.save(UserLoanHistory(savedUser, "이상한 나라의 엘리스", false))
         val request = BookReturnRequest("정승원", "이상한 나라의 엘리스")
