@@ -12,7 +12,7 @@ import javax.transaction.Transactional
 
 @SpringBootTest
 @Transactional
-open class UserServiceTest @Autowired constructor(
+class UserServiceTest @Autowired constructor(
     // constructor 에 @Autowired 를 붙이면 파라미터에 일일이 @Autowired 붙이는 걸 생략 가능!
     private val userRepository: UserRepository,
     private val userService: UserService,
