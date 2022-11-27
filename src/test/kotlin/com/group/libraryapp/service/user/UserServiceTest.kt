@@ -62,9 +62,9 @@ class UserServiceTest @Autowired constructor(
 
         // Then
         val userB = userRepository.findByName("B")
-        assertThat(userB.isPresent)
-        assertThat(userB.get().id).isEqualTo(savedUser.id)
-        assertThat(userB.get().name).isEqualTo("B")
+        assertThat(userB).isNotNull
+        assertThat(userB!!.id).isEqualTo(savedUser.id)
+        assertThat(userB!!.name).isEqualTo("B")
     }
 
     @Test
