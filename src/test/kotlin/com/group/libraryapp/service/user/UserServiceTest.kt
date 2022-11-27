@@ -57,7 +57,7 @@ open class UserServiceTest @Autowired constructor(
 
         // When
         userService.updateUserName(
-            UserUpdateRequest(savedUser.id, "B")
+            UserUpdateRequest(savedUser.id!!, "B")
         )
 
         // Then
