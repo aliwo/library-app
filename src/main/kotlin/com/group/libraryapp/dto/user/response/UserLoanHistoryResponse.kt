@@ -2,6 +2,7 @@ package com.group.libraryapp.dto.user.response
 
 import com.group.libraryapp.domain.user.User
 import com.group.libraryapp.domain.user.loanhistory.UserLoanHistory
+import com.group.libraryapp.domain.user.loanhistory.UserLoanStatus
 
 data class UserLoanHistoryResponse(
   val name: String, // 유저 이름
@@ -19,13 +20,13 @@ data class UserLoanHistoryResponse(
 
 data class BookHistoryResponse(
   val name: String, // 책의 이름
-  val isReturn: Boolean,
+  val status: UserLoanStatus,
 ) {
   companion object {
     fun of(history: UserLoanHistory): BookHistoryResponse {
       return BookHistoryResponse(
         name = history.bookName,
-        isReturn = history.isReturn
+        status = history.status
       )
     }
   }
