@@ -5,6 +5,8 @@ import javax.persistence.*
 @Entity
 class Book(
     val name: String,
+
+    @Enumerated(EnumType.STRING)
     val type: BookType,
 
     @Id
