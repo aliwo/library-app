@@ -19,7 +19,7 @@ class BookService(
 
     @Transactional
     fun saveBook(request: BookRequest) {
-        val book = Book(request.name)
+        val book = Book.fixture(request.name)
         bookRepository.save(book)
     }
 
