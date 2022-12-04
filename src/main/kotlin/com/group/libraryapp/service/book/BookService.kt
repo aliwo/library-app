@@ -8,6 +8,7 @@ import com.group.libraryapp.domain.user.loanhistory.UserLoanStatus
 import com.group.libraryapp.dto.book.request.BookLoanRequest
 import com.group.libraryapp.dto.book.request.BookRequest
 import com.group.libraryapp.dto.book.request.BookReturnRequest
+import com.group.libraryapp.dto.book.response.BookStatResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -38,5 +39,25 @@ class BookService(
     fun returnBook(request: BookReturnRequest) {
         val user = userRepository.findByName(request.userName) ?: throw IllegalArgumentException()
         user.returnBook(request.bookName)
+    }
+
+    @Transactional(readOnly = true)
+    fun countLoanedBook(): Int {
+        return userLoanHistoryRepository.findAllByStatus(UserLoanStatus.LOANED).size
+    }
+
+    @Transactional(readOnly = true)
+    fun getBookStatistics(): List<BookStatResponse> {
+        val results = mutableListOf<BookStatResponse>()
+        val books = bookRepository.findAll()
+        for (book in books) {
+
+            // results 리스트에서 dto 와 타입이 같은 element 를 찾고,
+            // 만약찾으면 ? 연산자에 의해 plusOne() 이 호출.
+            // 못 찾으면 엘비스 연산자에 의해 results.add(BookStatResponse(book.type, 1)) 이 호출.
+            val targetDto = results.firstOrNull { dto -> dto.type == book.type}?.plusOne()
+                ?: results.add(BookStatResponse(book.type, 1))
+        }
+        return results
     }
 }
