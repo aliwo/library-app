@@ -135,8 +135,8 @@ open class BookServiceTest @Autowired constructor(
         // Then
         assertThat(bookStatistics).hasSize(2)
         assertThat(bookStatistics.first { stat -> stat.type == BookType.COMPUTER }.count)
-            .isEqualTo(2)
+            .isEqualTo(2L)
         assertThat(bookStatistics.first { stat -> stat.type == BookType.SCIENCE }.count)
-            .isEqualTo(1)
+            .isEqualTo(1L)
     }
 }
