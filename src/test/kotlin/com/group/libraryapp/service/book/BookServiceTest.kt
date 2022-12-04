@@ -100,4 +100,43 @@ open class BookServiceTest @Autowired constructor(
         assertThat(results).hasSize(1)
         assertThat(results[0].status).isEqualTo(UserLoanStatus.RETURNED)
     }
+
+    @Test
+    fun countLoanedBookTest() {
+        // Given
+        val user = userRepository.save(User("test user1", null))
+        userLoanHistoryRepository.saveAll(
+            listOf(
+                UserLoanHistory.fixture(user, "A"),
+                UserLoanHistory.fixture(user, "B", UserLoanStatus.RETURNED),
+                UserLoanHistory.fixture(user, "B", UserLoanStatus.RETURNED),
+            )
+        )
+
+        // When
+        val result = bookService.countLoanedBook()
+
+        // Then
+        assertThat(result).isEqualTo(1)
+    }
+    
+    @Test
+    fun getBookStatisticsTest() {
+        // Given
+        bookRepository.saveAll(listOf(
+            Book.fixture("A", BookType.COMPUTER),
+            Book.fixture("B", BookType.COMPUTER),
+            Book.fixture("C", BookType.SCIENCE),
+        ))
+        
+        // When
+        val bookStatistics = bookService.getBookStatistics()
+
+        // Then
+        assertThat(bookStatistics).hasSize(2)
+        assertThat(bookStatistics.first { stat -> stat.type == BookType.COMPUTER }.count)
+            .isEqualTo(2)
+        assertThat(bookStatistics.first { stat -> stat.type == BookType.SCIENCE }.count)
+            .isEqualTo(1)
+    }
 }
